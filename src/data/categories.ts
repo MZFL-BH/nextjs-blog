@@ -6,6 +6,7 @@ export interface Category {
   icon: string;
   children?: Category[];
   count?: number;
+  parent?: string;
 }
 
 export const categories: Category[] = [

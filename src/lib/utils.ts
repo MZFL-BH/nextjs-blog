@@ -110,24 +110,24 @@ export function renderMarkdown(content: string): string {
 }
 
 // 防抖函数
-export function debounce<T extends (...args: unknown[]) => unknown>(
-  func: T,
+export function debounce<T extends unknown[]>(
+  func: (...args: T) => void,
   wait: number
-): (...args: Parameters<T>) => void {
+): (...args: T) => void {
   let timeout: NodeJS.Timeout;
-  return (...args: Parameters<T>) => {
+  return (...args: T) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
   };
 }
 
 // 节流函数
-export function throttle<T extends (...args: unknown[]) => unknown>(
-  func: T,
+export function throttle<T extends unknown[]>(
+  func: (...args: T) => void,
   limit: number
-): (...args: Parameters<T>) => void {
+): (...args: T) => void {
   let inThrottle: boolean;
-  return (...args: Parameters<T>) => {
+  return (...args: T) => {
     if (!inThrottle) {
       func(...args);
       inThrottle = true;
