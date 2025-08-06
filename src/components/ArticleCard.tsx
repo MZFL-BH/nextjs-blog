@@ -19,18 +19,38 @@ export default function ArticleCard({ article, featured = false }: ArticleCardPr
 
   return (
     <Link href={`/article/${article.id}`}>
-      <article className={cn(
-        "group bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 hover:shadow-lg dark:hover:shadow-xl overflow-hidden",
-        featured && "ring-2 ring-blue-100 dark:ring-blue-900"
-      )}>
-        {/* 文章头部 */}
+      <article
+        className={cn(
+          "group rounded-lg transition-all duration-200 overflow-hidden border",
+          featured && "ring-1 ring-blue-200 dark:ring-blue-800"
+        )}
+        style={{
+          backgroundColor: 'var(--bgColor-default)',
+          borderColor: 'var(--borderColor-default)',
+          boxShadow: 'var(--shadow-small)'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.boxShadow = 'var(--shadow-medium)';
+          e.currentTarget.style.borderColor = 'var(--borderColor-emphasis)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.boxShadow = 'var(--shadow-small)';
+          e.currentTarget.style.borderColor = 'var(--borderColor-default)';
+        }}
+      >
+        {/* GitHub 风格文章头部 */}
         <div className="p-6">
           {/* 标题和评分 */}
           <div className="flex items-start justify-between mb-3">
-            <h3 className={cn(
-              "font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2",
-              featured ? "text-lg" : "text-base"
-            )}>
+            <h3
+              className={cn(
+                "font-semibold group-hover:underline transition-all line-clamp-2 leading-snug",
+                featured ? "text-lg" : "text-base"
+              )}
+              style={{
+                color: 'var(--fgColor-accent)',
+              }}
+            >
               {title}
             </h3>
             {article.rating && (

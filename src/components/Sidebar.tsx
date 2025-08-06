@@ -44,21 +44,35 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       )}
       
       {/* 侧边栏 */}
-      <div className={cn(
-        "fixed top-0 left-0 h-screen w-80 bg-white dark:bg-black border-r border-gray-200 dark:border-gray-800 z-50 transform transition-transform duration-300 ease-in-out lg:fixed lg:translate-x-0 lg:z-auto flex flex-col",
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      )}>
-        {/* 头部 */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
+      <div
+        className={cn(
+          "fixed top-0 left-0 h-screen w-80 z-50 transform transition-all duration-300 ease-in-out lg:fixed lg:translate-x-0 lg:z-auto flex flex-col",
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+        style={{
+          backgroundColor: 'var(--bgColor-muted)',
+          borderRight: '1px solid var(--borderColor-default)',
+          boxShadow: 'var(--shadow-large)'
+        }}
+      >
+        {/* GitHub 风格头部 */}
+        <div
+          className="flex items-center justify-between p-6"
+          style={{ borderBottom: '1px solid var(--borderColor-default)' }}
+        >
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg">👨‍💻</span>
+            <div className="w-10 h-10 rounded-full flex items-center justify-center"
+                 style={{
+                   backgroundColor: 'var(--bgColor-emphasis)',
+                   color: 'var(--fgColor-onEmphasis)'
+                 }}>
+              <span className="font-bold text-lg">👨‍💻</span>
             </div>
             <div>
-              <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">
+              <h1 className="text-lg font-semibold" style={{ color: 'var(--fgColor-default)' }}>
                 MZFL
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-sm" style={{ color: 'var(--fgColor-muted)' }}>
                 {locale === 'en' ? 'Frontend Learning' : '前端学习'}
               </p>
             </div>
@@ -76,20 +90,34 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         </div>
 
         {/* 导航内容 */}
-        <div className="flex-1 overflow-y-auto py-4 min-h-0">
-          <nav className="px-4 space-y-2">
-            {/* 首页链接 */}
+        <div className="flex-1 overflow-y-auto py-6 min-h-0">
+          <nav className="px-4 space-y-1">
+            {/* GitHub 风格首页链接 */}
             <Link
               href="/"
               className={cn(
-                "flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-                pathname === '/' 
-                  ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300" 
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                "flex items-center px-3 py-2 rounded-md text-sm font-medium transition-all duration-150 group",
+                pathname === '/'
+                  ? "font-semibold"
+                  : "hover:no-underline"
               )}
+              style={{
+                backgroundColor: pathname === '/' ? 'var(--bgColor-accent-muted)' : 'transparent',
+                color: pathname === '/' ? 'var(--fgColor-accent)' : 'var(--fgColor-default)'
+              }}
+              onMouseEnter={(e) => {
+                if (pathname !== '/') {
+                  e.currentTarget.style.backgroundColor = 'var(--control-bgColor-hover)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (pathname !== '/') {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }
+              }}
               onClick={onClose}
             >
-              <span className="mr-3 text-lg">🏠</span>
+              <span className="mr-3 text-base">🏠</span>
               <span>{locale === 'en' ? 'Home' : '首页'}</span>
             </Link>
 

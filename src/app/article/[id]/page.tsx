@@ -7,7 +7,8 @@ import Sidebar from '@/components/Sidebar';
 import { getArticleById, articles } from '@/data/articles';
 import { getCategoryById } from '@/data/categories';
 import { useLocale } from '@/hooks/useLocale';
-import { formatDate, getDifficultyColor, getDifficultyText, renderMarkdown } from '@/lib/utils';
+import { formatDate, getDifficultyColor, getDifficultyText } from '@/lib/utils';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -131,36 +132,21 @@ export default function ArticlePage() {
                 ))}
               </div>
 
-              {/* 统计信息 */}
-              <div className="flex items-center space-x-6 text-sm text-gray-500 dark:text-gray-400 pb-6 border-b border-gray-200 dark:border-gray-700">
-                <div className="flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                  <span>{article.views.toLocaleString()} {t('article.views')}</span>
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                  <span>{article.likes} {t('article.likes')}</span>
-                </div>
-                {article.rating && (
-                  <div className="flex items-center">
-                    <span className="text-yellow-500 mr-1">⭐</span>
-                    <span>{article.rating}/5</span>
+              {/* 文章评分 */}
+              {article.rating && (
+                <div className="flex items-center pb-6 border-b border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                    <span className="text-yellow-500 mr-2">⭐</span>
+                    <span className="font-medium">{article.rating}/5</span>
+                    <span className="ml-2 text-gray-400">文章评分</span>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </header>
 
             {/* 文章内容 */}
-            <article className="prose prose-lg max-w-none dark:prose-invert mb-12">
-              <div 
-                className="text-gray-800 dark:text-gray-200 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}
-              />
+            <article className="prose prose-lg max-w-none mb-12">
+              <MarkdownRenderer content={content} />
             </article>
 
             {/* 相关文章 */}

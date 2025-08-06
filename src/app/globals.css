@@ -1,58 +1,157 @@
 @import "tailwindcss";
 
-@theme {
-  --color-background: #ffffff;
-  --color-foreground: #171717;
-}
+/* GitHub Primer 设计系统配色方案 */
+:root {
+  /* === GitHub Light Theme === */
+  /* 背景色 */
+  --bgColor-default: #ffffff;
+  --bgColor-muted: #f6f8fa;
+  --bgColor-inset: #f6f8fa;
+  --bgColor-emphasis: #0969da;
 
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: #0a0a0a;
-    --color-foreground: #ededed;
-  }
+  /* 前景色 */
+  --fgColor-default: #1f2328;
+  --fgColor-muted: #656d76;
+  --fgColor-subtle: #6e7781;
+  --fgColor-onEmphasis: #ffffff;
+
+  /* 边框色 */
+  --borderColor-default: #d1d9e0;
+  --borderColor-muted: #d8dee4;
+  --borderColor-subtle: #afb8c1;
+  --borderColor-emphasis: #0969da;
+
+  /* 控件色 */
+  --control-bgColor-rest: #f6f8fa;
+  --control-bgColor-hover: #f3f4f6;
+  --control-borderColor-rest: #d1d9e0;
+  --control-borderColor-emphasis: #0969da;
+
+  /* 语义色 */
+  --bgColor-accent-muted: #dbeafe;
+  --bgColor-success-muted: #dcfce7;
+  --bgColor-attention-muted: #fef3c7;
+  --bgColor-danger-muted: #fee2e2;
+
+  --fgColor-accent: #0969da;
+  --fgColor-success: #1a7f37;
+  --fgColor-attention: #bf8700;
+  --fgColor-danger: #d1242f;
+
+  /* 阴影 */
+  --shadow-small: 0 1px 3px rgba(31, 35, 40, 0.12), 0 1px 2px rgba(31, 35, 40, 0.24);
+  --shadow-medium: 0 3px 6px rgba(31, 35, 40, 0.15), 0 2px 4px rgba(31, 35, 40, 0.12);
+  --shadow-large: 0 8px 24px rgba(31, 35, 40, 0.12), 0 4px 8px rgba(31, 35, 40, 0.08);
+  --shadow-extra-large: 0 12px 28px rgba(31, 35, 40, 0.15), 0 4px 10px rgba(31, 35, 40, 0.08);
 }
 
 .dark {
-  --color-background: #0a0a0a;
-  --color-foreground: #ededed;
+  /* === GitHub Dark Theme === */
+  /* 背景色 */
+  --bgColor-default: #0d1117;
+  --bgColor-muted: #161b22;
+  --bgColor-inset: #010409;
+  --bgColor-emphasis: #1f6feb;
+
+  /* 前景色 */
+  --fgColor-default: #e6edf3;
+  --fgColor-muted: #7d8590;
+  --fgColor-subtle: #6e7681;
+  --fgColor-onEmphasis: #ffffff;
+
+  /* 边框色 */
+  --borderColor-default: #30363d;
+  --borderColor-muted: #21262d;
+  --borderColor-subtle: #484f58;
+  --borderColor-emphasis: #1f6feb;
+
+  /* 控件色 */
+  --control-bgColor-rest: #21262d;
+  --control-bgColor-hover: #30363d;
+  --control-borderColor-rest: #30363d;
+  --control-borderColor-emphasis: #1f6feb;
+
+  /* 语义色 */
+  --bgColor-accent-muted: #0c2d6b;
+  --bgColor-success-muted: #0f5132;
+  --bgColor-attention-muted: #7c2d12;
+  --bgColor-danger-muted: #86181d;
+
+  --fgColor-accent: #58a6ff;
+  --fgColor-success: #3fb950;
+  --fgColor-attention: #d29922;
+  --fgColor-danger: #f85149;
+
+  /* 阴影 */
+  --shadow-small: 0 1px 3px rgba(1, 4, 9, 0.12), 0 1px 2px rgba(1, 4, 9, 0.24);
+  --shadow-medium: 0 3px 6px rgba(1, 4, 9, 0.15), 0 2px 4px rgba(1, 4, 9, 0.12);
+  --shadow-large: 0 8px 24px rgba(1, 4, 9, 0.12), 0 4px 8px rgba(1, 4, 9, 0.08);
+  --shadow-extra-large: 0 12px 28px rgba(1, 4, 9, 0.15), 0 4px 10px rgba(1, 4, 9, 0.08);
+}
+
+/* 兼容性变量 */
+:root {
+  --background: var(--bgColor-default);
+  --foreground: var(--fgColor-default);
+  --card-background: var(--bgColor-default);
+  --card-border: var(--borderColor-default);
+  --sidebar-background: var(--bgColor-muted);
+  --sidebar-border: var(--borderColor-default);
+  --hover-background: var(--control-bgColor-hover);
+  --shadow-sm: var(--shadow-small);
+  --shadow-md: var(--shadow-medium);
+  --shadow-lg: var(--shadow-large);
+}
+
+.dark {
+  --background-rgb: 13, 17, 23;
 }
 
 :root {
-  --background: var(--color-background);
-  --foreground: var(--color-foreground);
-}
-
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background-rgb: 255, 255, 255;
 }
 
 body {
-  color: var(--foreground);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  color: var(--fgColor-default);
+  background-color: var(--bgColor-default);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
-/* 主题切换动画 */
+/* GitHub 风格主题切换动画 */
 html {
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* 自定义滚动条 */
+/* GitHub 风格焦点样式 */
+*:focus-visible {
+  outline: 2px solid var(--fgColor-accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* GitHub 风格滚动条 */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
+  background: var(--bgColor-muted);
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  background: var(--borderColor-subtle);
+  border-radius: 4px;
+  border: 2px solid var(--bgColor-muted);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
+  background: var(--fgColor-muted);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bgColor-muted);
 }
 
 /* 文本截断 */
@@ -90,10 +189,43 @@ html {
 /* 代码块样式 */
 pre {
   @apply overflow-x-auto;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+  line-height: 1.6;
 }
 
 code {
-  @apply font-mono text-sm;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* 代码块复制按钮样式 */
+.code-block-copy {
+  transition: all 0.2s ease;
+}
+
+.code-block-copy:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: scale(1.05);
+}
+
+/* 代码块语法高亮 */
+.code-block pre {
+  background: var(--card-background) !important;
+  color: var(--foreground) !important;
+}
+
+/* 代码块行号 */
+.code-line {
+  display: block;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-left: 2px solid transparent;
+}
+
+.code-line:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-left-color: #3b82f6;
 }
 
 /* 响应式图片 */

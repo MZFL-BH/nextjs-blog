@@ -87,7 +87,14 @@ export default function Header({ onMenuClick }: HeaderProps) {
   }
 
   return (
-    <header className="sticky top-0 z-30 bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 lg:ml-80">
+    <header
+      className="sticky top-0 z-30 backdrop-blur-md lg:ml-80 border-b"
+      style={{
+        backgroundColor: 'rgba(var(--background-rgb), 0.8)',
+        borderColor: 'var(--borderColor-default)',
+        boxShadow: 'var(--shadow-small)'
+      }}
+    >
       <div className="flex items-center justify-between px-4 py-3 lg:px-6">
         {/* 左侧：菜单按钮 */}
         <div className="flex items-center space-x-4">

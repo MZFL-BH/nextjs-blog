@@ -72,19 +72,29 @@ export function renderMarkdown(content: string): string {
       const lang = language || 'text';
       const trimmedCode = code.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;');
       return `
-        <div class="relative bg-gray-900 dark:bg-gray-800 rounded-lg overflow-hidden my-6">
-          <div class="flex items-center justify-between px-4 py-2 bg-gray-800 dark:bg-gray-700 border-b border-gray-700 dark:border-gray-600">
-            <span class="px-2 py-1 bg-gray-700 dark:bg-gray-600 text-gray-300 dark:text-gray-200 text-xs rounded font-mono">
-              ${lang.toUpperCase()}
-            </span>
+        <div class="relative rounded-2xl overflow-hidden my-8 group" style="background: var(--card-background); border: 1px solid var(--card-border); box-shadow: var(--shadow-md);">
+          <div class="flex items-center justify-between px-6 py-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div class="flex items-center space-x-3">
+              <div class="flex space-x-2">
+                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+              </div>
+              <span class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white text-sm rounded-lg font-mono font-medium">
+                ${lang.toUpperCase()}
+              </span>
+            </div>
+            <button class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 px-3 py-1 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white text-sm rounded-lg font-mono" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.textContent)">
+              复制
+            </button>
           </div>
-          <pre class="bg-gray-900 dark:bg-gray-800 text-gray-100 dark:text-gray-200 p-4 overflow-x-auto"><code>${trimmedCode}</code></pre>
+          <pre class="p-6 overflow-x-auto text-sm leading-relaxed" style="background: var(--card-background); color: var(--foreground);"><code class="font-mono">${trimmedCode}</code></pre>
         </div>
       `;
     })
     
     // 行内代码
-    .replace(/`([^`]+)`/gim, '<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-800 dark:text-gray-200">$1</code>')
+    .replace(/`([^`]+)`/gim, '<code class="px-2 py-1 rounded-lg text-sm font-mono font-medium" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2);">$1</code>')
     
     // 粗体和斜体
     .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-semibold">$1</strong>')
