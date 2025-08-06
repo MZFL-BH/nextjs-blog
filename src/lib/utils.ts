@@ -1,0 +1,127 @@
+// 简单的类名合并函数
+export function cn(...inputs: (string | undefined | null | boolean)[]) {
+  return inputs.filter(Boolean).join(' ');
+}
+
+// 格式化日期
+export function formatDate(date: string, locale: 'zh' | 'en' = 'zh'): string {
+  const d = new Date(date);
+  
+  if (locale === 'en') {
+    return d.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+  
+  return d.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+// 获取难度标签颜色
+export function getDifficultyColor(difficulty: 'beginner' | 'intermediate' | 'advanced'): string {
+  switch (difficulty) {
+    case 'beginner':
+      return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+    case 'intermediate':
+      return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+    case 'advanced':
+      return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+    default:
+      return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+  }
+}
+
+// 获取难度文本
+export function getDifficultyText(difficulty: 'beginner' | 'intermediate' | 'advanced', locale: 'zh' | 'en' = 'zh'): string {
+  const texts = {
+    zh: {
+      beginner: '初级',
+      intermediate: '中级',
+      advanced: '高级'
+    },
+    en: {
+      beginner: 'Beginner',
+      intermediate: 'Intermediate',
+      advanced: 'Advanced'
+    }
+  };
+  
+  return texts[locale][difficulty];
+}
+
+// 渲染星级评分
+export function renderStars(rating: number): string {
+  return '⭐'.repeat(Math.floor(rating)) + (rating % 1 >= 0.5 ? '⭐' : '');
+}
+
+// 简单的 Markdown 渲染器
+export function renderMarkdown(content: string): string {
+  return content
+    // 标题
+    .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold mb-3 mt-6 text-gray-900 dark:text-gray-100">$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mb-4 mt-8 text-gray-900 dark:text-gray-100">$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">$1</h1>')
+    
+    // 代码块
+    .replace(/```(\w+)?\n([\s\S]*?)```/gim, (match, language, code) => {
+      const lang = language || 'text';
+      const trimmedCode = code.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return `
+        <div class="relative bg-gray-900 dark:bg-gray-800 rounded-lg overflow-hidden my-6">
+          <div class="flex items-center justify-between px-4 py-2 bg-gray-800 dark:bg-gray-700 border-b border-gray-700 dark:border-gray-600">
+            <span class="px-2 py-1 bg-gray-700 dark:bg-gray-600 text-gray-300 dark:text-gray-200 text-xs rounded font-mono">
+              ${lang.toUpperCase()}
+            </span>
+          </div>
+          <pre class="bg-gray-900 dark:bg-gray-800 text-gray-100 dark:text-gray-200 p-4 overflow-x-auto"><code>${trimmedCode}</code></pre>
+        </div>
+      `;
+    })
+    
+    // 行内代码
+    .replace(/`([^`]+)`/gim, '<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-800 dark:text-gray-200">$1</code>')
+    
+    // 粗体和斜体
+    .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-semibold">$1</strong>')
+    .replace(/\*(.*?)\*/gim, '<em class="italic">$1</em>')
+    
+    // 列表
+    .replace(/^\d+\. (.*$)/gim, '<li class="mb-2 ml-6 list-decimal">$1</li>')
+    .replace(/^- (.*$)/gim, '<li class="mb-2 ml-6 list-disc">$1</li>')
+    
+    // 段落
+    .replace(/\n\n/gim, '</p><p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">')
+    .replace(/^(?!<[h|l|p|d|c])(.*$)/gim, '<p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">$1</p>');
+}
+
+// 防抖函数
+export function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  wait: number
+): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout;
+  return (...args: Parameters<T>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+}
+
+// 节流函数
+export function throttle<T extends (...args: any[]) => any>(
+  func: T,
+  limit: number
+): (...args: Parameters<T>) => void {
+  let inThrottle: boolean;
+  return (...args: Parameters<T>) => {
+    if (!inThrottle) {
+      func(...args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
