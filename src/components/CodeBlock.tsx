@@ -9,7 +9,7 @@ interface CodeBlockProps {
   showLineNumbers?: boolean;
 }
 
-export default function CodeBlock({ code, language, showLineNumbers = true }: CodeBlockProps) {
+export default function CodeBlock({ code, language }: CodeBlockProps) {
   const codeRef = useRef<HTMLElement>(null);
   const [copied, setCopied] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -167,6 +167,8 @@ export default function CodeBlock({ code, language, showLineNumbers = true }: Co
 // 声明全局 Prism 类型
 declare global {
   interface Window {
-    Prism: any;
+    Prism: {
+      highlightElement: (element: HTMLElement) => void;
+    };
   }
 }

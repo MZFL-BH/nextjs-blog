@@ -168,13 +168,13 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   const t = (key: string): string => {
     const keys = key.split('.');
-    let value: any = translations[locale];
-    
+    let value: Record<string, unknown> = translations[locale];
+
     for (const k of keys) {
-      value = value?.[k];
+      value = value?.[k] as Record<string, unknown>;
     }
-    
-    return value || key;
+
+    return (value as unknown as string) || key;
   };
 
   return React.createElement(

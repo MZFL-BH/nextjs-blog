@@ -3,7 +3,7 @@
 import { useTheme } from '@/hooks/useTheme';
 
 export default function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
   const toggleTheme = () => {
     if (resolvedTheme === 'dark') {

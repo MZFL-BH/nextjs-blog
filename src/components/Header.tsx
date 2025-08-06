@@ -63,7 +63,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
 
   useEffect(() => {
     performSearch(searchQuery);
-  }, [searchQuery, locale]);
+  }, [searchQuery, locale, performSearch]);
 
   // 点击外部关闭搜索结果
   useEffect(() => {

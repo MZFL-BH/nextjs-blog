@@ -12,7 +12,7 @@ interface ArticleCardProps {
 }
 
 export default function ArticleCard({ article, featured = false }: ArticleCardProps) {
-  const { locale, t } = useLocale();
+  const { locale } = useLocale();
 
   const title = locale === 'en' ? article.titleEn : article.title;
   const description = locale === 'en' ? article.descriptionEn : article.description;

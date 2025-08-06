@@ -68,7 +68,7 @@ export function renderMarkdown(content: string): string {
     .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">$1</h1>')
     
     // 代码块
-    .replace(/```(\w+)?\n([\s\S]*?)```/gim, (match, language, code) => {
+    .replace(/```(\w+)?\n([\s\S]*?)```/gim, (_, language, code) => {
       const lang = language || 'text';
       const trimmedCode = code.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;');
       return `
@@ -110,7 +110,7 @@ export function renderMarkdown(content: string): string {
 }
 
 // 防抖函数
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -122,7 +122,7 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 // 节流函数
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {

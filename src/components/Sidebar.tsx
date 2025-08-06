@@ -14,7 +14,7 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
-  const { locale, t } = useLocale();
+  const { locale } = useLocale();
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['frontend-basics']);
 
   const toggleCategory = (categoryId: string) => {
@@ -29,9 +29,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     return pathname === `/category/${categoryId}`;
   };
 
-  const isActiveArticle = (articleId: string) => {
-    return pathname === `/article/${articleId}`;
-  };
+  // const isActiveArticle = (articleId: string) => {
+  //   return pathname === `/article/${articleId}`;
+  // };
 
   return (
     <>
