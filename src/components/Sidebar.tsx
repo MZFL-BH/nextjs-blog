@@ -46,10 +46,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* 侧边栏 */}
       <div
         className={cn(
-          "fixed top-0 left-0 h-screen w-64 z-50 transform transition-all duration-300 ease-in-out lg:fixed lg:translate-x-0 lg:z-auto flex flex-col",
+          "fixed top-0 left-0 h-screen z-50 transform transition-all duration-300 ease-in-out lg:fixed lg:translate-x-0 lg:z-auto flex flex-col",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
         style={{
+          width: '256px', // 使用固定宽度确保与CSS变量一致
           backgroundColor: 'var(--bgColor-muted)',
           borderRight: '1px solid var(--borderColor-default)',
           boxShadow: 'var(--shadow-large)'
@@ -175,12 +176,27 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                       <Link
                         key={subcategory.id}
                         href={`/category/${subcategory.id}`}
-                        className={cn(
-                          "flex items-center px-3 py-2 rounded-lg text-sm transition-colors",
-                          isActiveCategory(subcategory.id)
-                            ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
-                            : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200"
-                        )}
+                        className="flex items-center px-3 py-2 rounded-lg text-sm transition-colors"
+                        style={{
+                          backgroundColor: isActiveCategory(subcategory.id)
+                            ? 'var(--bgColor-accent-muted)'
+                            : 'transparent',
+                          color: isActiveCategory(subcategory.id)
+                            ? 'var(--fgColor-accent)'
+                            : 'var(--fgColor-muted)'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!isActiveCategory(subcategory.id)) {
+                            e.currentTarget.style.backgroundColor = 'var(--bgColor-muted)';
+                            e.currentTarget.style.color = 'var(--fgColor-default)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!isActiveCategory(subcategory.id)) {
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                            e.currentTarget.style.color = 'var(--fgColor-muted)';
+                          }
+                        }}
                         onClick={onClose}
                       >
                         <span className="mr-3 text-base">{subcategory.icon}</span>

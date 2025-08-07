@@ -4,10 +4,9 @@ import { useState } from 'react';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import ArticleCard from '@/components/ArticleCard';
-import ThemeToggle from '@/components/ThemeToggle';
 
 import { categories } from '@/data/categories';
-import { articles, getFeaturedArticles } from '@/data/articles';
+import { articles, getFeaturedArticles, getArticlesByCategory } from '@/data/articles';
 import { useLocale } from '@/hooks/useLocale';
 import Link from 'next/link';
 
@@ -20,21 +19,22 @@ export default function Home() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
+      {/* 侧边栏 */}
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+
       {/* 头部导航 */}
       <Header onMenuClick={() => setSidebarOpen(true)} />
 
-      <div className="flex">
-        {/* 侧边栏 */}
-        <Sidebar
-          isOpen={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-        />
-
-        {/* 主题切换按钮 */}
-        <ThemeToggle />
-
-        {/* 主内容区域 */}
-        <main className="flex-1 lg:ml-64">
+      {/* 主内容区域 */}
+      <main
+        className="flex-1"
+        style={{
+          marginLeft: 'var(--sidebar-width, 0)'
+        }}
+      >
 
 
           <div className="max-w-7xl mx-auto px-6 py-12 lg:px-8">
@@ -105,14 +105,31 @@ export default function Home() {
                         >
                           {locale === 'en' ? category.nameEn : category.name}
                         </h3>
-                        {category.children && (
+                        <div className="space-y-1">
+                          {category.children && (
+                            <p
+                              className="text-sm"
+                              style={{ color: 'var(--fgColor-muted)' }}
+                            >
+                              {category.children.length} {locale === 'en' ? 'topics' : '个主题'}
+                            </p>
+                          )}
                           <p
                             className="text-sm"
                             style={{ color: 'var(--fgColor-muted)' }}
                           >
-                            {category.children.length} {locale === 'en' ? 'topics' : '个主题'}
+                            {(() => {
+                              // 计算该分类及其子分类的文章总数
+                              let totalArticles = getArticlesByCategory(category.id).length;
+                              if (category.children) {
+                                category.children.forEach(child => {
+                                  totalArticles += getArticlesByCategory(child.id).length;
+                                });
+                              }
+                              return totalArticles;
+                            })()} {locale === 'en' ? 'articles' : '篇文章'}
                           </p>
-                        )}
+                        </div>
                       </div>
                     </div>
                     {category.children && (
@@ -120,13 +137,23 @@ export default function Home() {
                         {category.children.slice(0, 3).map((child) => (
                           <span
                             key={child.id}
-                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                            style={{
+                              backgroundColor: 'var(--bgColor-accent-muted)',
+                              color: 'var(--fgColor-accent)'
+                            }}
                           >
                             {child.icon} {locale === 'en' ? child.nameEn : child.name}
                           </span>
                         ))}
                         {category.children.length > 3 && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                          <span
+                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                            style={{
+                              backgroundColor: 'var(--bgColor-accent-muted)',
+                              color: 'var(--fgColor-accent)'
+                            }}
+                          >
                             +{category.children.length - 3}
                           </span>
                         )}
@@ -179,6 +206,5 @@ export default function Home() {
           </div>
         </main>
       </div>
-    </div>
   );
 }

@@ -5,7 +5,6 @@ import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import ArticleCard from '@/components/ArticleCard';
-import ThemeToggle from '@/components/ThemeToggle';
 import { getCategoryById, getAllCategories } from '@/data/categories';
 import { getArticlesByCategory } from '@/data/articles';
 import { useLocale } from '@/hooks/useLocale';
@@ -16,7 +15,7 @@ export default function CategoryPage() {
   const params = useParams();
   const categoryId = params.id as string;
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { locale, t } = useLocale();
+  const { locale } = useLocale();
 
   const category = getCategoryById(categoryId);
   const articles = getArticlesByCategory(categoryId);
@@ -46,32 +45,45 @@ export default function CategoryPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
+      {/* 侧边栏 */}
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+
       {/* 头部导航 */}
       <Header onMenuClick={() => setSidebarOpen(true)} />
-      
-      <div className="flex">
-        {/* 侧边栏 */}
-        <Sidebar
-          isOpen={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-        />
 
-        {/* 主题切换按钮 */}
-        <ThemeToggle />
-
-        {/* 主内容区域 */}
-        <main className="flex-1 lg:ml-64">
+      {/* 主内容区域 */}
+      <main
+        className="flex-1"
+        style={{
+          marginLeft: 'var(--sidebar-width, 0)'
+        }}
+      >
           <div className="max-w-7xl mx-auto px-4 py-8 lg:px-8">
             {/* 面包屑导航 */}
-            <nav className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-6">
-              <Link 
-                href="/" 
-                className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            <nav className="flex items-center space-x-2 text-sm mb-6">
+              <Link
+                href="/"
+                className="transition-colors"
+                style={{
+                  color: 'var(--fgColor-muted)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = 'var(--fgColor-accent)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'var(--fgColor-muted)';
+                }}
               >
                 {locale === 'en' ? 'Home' : '首页'}
               </Link>
-              <span>/</span>
-              <span className="text-gray-900 dark:text-gray-100 font-medium">
+              <span style={{ color: 'var(--fgColor-subtle)' }}>/</span>
+              <span
+                className="font-medium"
+                style={{ color: 'var(--fgColor-default)' }}
+              >
                 {categoryName}
               </span>
             </nav>
@@ -81,11 +93,17 @@ export default function CategoryPage() {
               <div className="flex items-center mb-4">
                 <span className="text-4xl mr-4">{category.icon}</span>
                 <div>
-                  <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100">
+                  <h1
+                    className="text-3xl lg:text-4xl font-bold"
+                    style={{ color: 'var(--fgColor-default)' }}
+                  >
                     {categoryName}
                   </h1>
-                  <p className="text-lg text-gray-600 dark:text-gray-300 mt-2">
-                    {uniqueArticles.length} {t('category.articlesCount')}
+                  <p
+                    className="text-lg mt-2"
+                    style={{ color: 'var(--fgColor-muted)' }}
+                  >
+                    {uniqueArticles.length} {locale === 'en' ? 'articles' : '篇文章'}
                   </p>
                 </div>
               </div>
@@ -94,7 +112,10 @@ export default function CategoryPage() {
             {/* 子分类 */}
             {category.children && category.children.length > 0 && (
               <section className="mb-8">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                <h2
+                  className="text-xl font-semibold mb-4"
+                  style={{ color: 'var(--fgColor-default)' }}
+                >
                   {locale === 'en' ? 'Subcategories' : '子分类'}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -104,16 +125,35 @@ export default function CategoryPage() {
                       <Link
                         key={subcategory.id}
                         href={`/category/${subcategory.id}`}
-                        className="group bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 hover:shadow-md p-4"
+                        className="group rounded-lg border transition-all duration-200 p-4"
+                        style={{
+                          backgroundColor: 'var(--bgColor-default)',
+                          borderColor: 'var(--borderColor-default)',
+                          boxShadow: 'var(--shadow-small)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.boxShadow = 'var(--shadow-medium)';
+                          e.currentTarget.style.borderColor = 'var(--borderColor-emphasis)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.boxShadow = 'var(--shadow-small)';
+                          e.currentTarget.style.borderColor = 'var(--borderColor-default)';
+                        }}
                       >
                         <div className="flex items-center">
                           <span className="text-2xl mr-3">{subcategory.icon}</span>
                           <div>
-                            <h3 className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            <h3
+                              className="font-medium transition-colors"
+                              style={{ color: 'var(--fgColor-accent)' }}
+                            >
                               {locale === 'en' ? subcategory.nameEn : subcategory.name}
                             </h3>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                              {subcategoryArticles.length} {t('category.articlesCount')}
+                            <p
+                              className="text-sm"
+                              style={{ color: 'var(--fgColor-muted)' }}
+                            >
+                              {subcategoryArticles.length} {locale === 'en' ? 'articles' : '篇文章'}
                             </p>
                           </div>
                         </div>
@@ -127,11 +167,17 @@ export default function CategoryPage() {
             {/* 文章列表 */}
             <section>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                <h2
+                  className="text-xl font-semibold"
+                  style={{ color: 'var(--fgColor-default)' }}
+                >
                   {locale === 'en' ? 'Articles' : '文章'}
                 </h2>
                 {uniqueArticles.length > 0 && (
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div
+                    className="text-sm"
+                    style={{ color: 'var(--fgColor-muted)' }}
+                  >
                     {locale === 'en' ? 'Showing' : '显示'} {uniqueArticles.length} {locale === 'en' ? 'articles' : '篇文章'}
                   </div>
                 )}
@@ -146,27 +192,42 @@ export default function CategoryPage() {
               ) : (
                 <div className="text-center py-12">
                   <div className="text-6xl mb-4">📝</div>
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
-                    {t('category.noArticles')}
+                  <h3
+                    className="text-lg font-medium mb-2"
+                    style={{ color: 'var(--fgColor-default)' }}
+                  >
+                    {locale === 'en' ? 'No articles yet' : '暂无文章'}
                   </h3>
-                  <p className="text-gray-500 dark:text-gray-400 mb-6">
-                    {locale === 'en' 
-                      ? 'No articles have been published in this category yet.' 
+                  <p
+                    className="mb-6"
+                    style={{ color: 'var(--fgColor-muted)' }}
+                  >
+                    {locale === 'en'
+                      ? 'No articles have been published in this category yet.'
                       : '该分类下暂时还没有发布文章。'
                     }
                   </p>
                   <Link
                     href="/"
-                    className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="inline-flex items-center px-4 py-2 rounded-lg transition-colors"
+                    style={{
+                      backgroundColor: 'var(--bgColor-emphasis)',
+                      color: 'var(--fgColor-onEmphasis)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = '0.9';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = '1';
+                    }}
                   >
-                    {t('category.backToHome')}
+                    {locale === 'en' ? 'Back to Home' : '返回首页'}
                   </Link>
                 </div>
               )}
             </section>
           </div>
         </main>
-      </div>
     </div>
   );
 }

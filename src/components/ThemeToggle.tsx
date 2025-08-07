@@ -26,10 +26,20 @@ export default function ThemeToggle() {
       onMouseEnter={(e) => {
         e.currentTarget.style.backgroundColor = 'var(--control-bgColor-hover)';
         e.currentTarget.style.borderColor = 'var(--borderColor-emphasis)';
+        e.currentTarget.style.boxShadow = 'var(--shadow-medium)';
+        e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.backgroundColor = 'var(--bgColor-default)';
         e.currentTarget.style.borderColor = 'var(--borderColor-default)';
+        e.currentTarget.style.boxShadow = 'var(--shadow-small)';
+        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+      }}
+      onMouseDown={(e) => {
+        e.currentTarget.style.transform = 'translateY(0) scale(0.95)';
+      }}
+      onMouseUp={(e) => {
+        e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
       }}
       title={`切换到${resolvedTheme === 'dark' ? '浅色' : '暗色'}模式`}
       aria-label={`切换到${resolvedTheme === 'dark' ? '浅色' : '暗色'}模式`}

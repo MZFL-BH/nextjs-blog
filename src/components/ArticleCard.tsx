@@ -128,8 +128,17 @@ export default function ArticleCard({ article, featured = false }: ArticleCardPr
         </div>
 
         {/* 文章底部统计 */}
-        <div className="px-6 py-3 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700">
-          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+        <div
+          className="px-6 py-3 border-t"
+          style={{
+            backgroundColor: 'var(--bgColor-muted)',
+            borderColor: 'var(--borderColor-default)'
+          }}
+        >
+          <div
+            className="flex items-center justify-between text-sm"
+            style={{ color: 'var(--fgColor-muted)' }}
+          >
             <div className="flex items-center space-x-4">
               {/* 作者 */}
               <span className="flex items-center">

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
-import ThemeToggle from '@/components/ThemeToggle';
 import { getArticleById, articles } from '@/data/articles';
 import { getCategoryById } from '@/data/categories';
 import { useLocale } from '@/hooks/useLocale';
@@ -37,21 +36,22 @@ export default function ArticlePage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
+      {/* 侧边栏 */}
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+
       {/* 头部导航 */}
       <Header onMenuClick={() => setSidebarOpen(true)} />
-      
-      <div className="flex">
-        {/* 侧边栏 */}
-        <Sidebar
-          isOpen={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-        />
 
-        {/* 主题切换按钮 */}
-        <ThemeToggle />
-
-        {/* 主内容区域 */}
-        <main className="flex-1 lg:ml-64">
+      {/* 主内容区域 */}
+      <main
+        className="flex-1"
+        style={{
+          marginLeft: 'var(--sidebar-width, 0)'
+        }}
+      >
           <div className="max-w-4xl mx-auto px-4 py-8 lg:px-8">
             {/* 面包屑导航 */}
             <nav className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-6">
@@ -185,7 +185,6 @@ export default function ArticlePage() {
             )}
           </div>
         </main>
-      </div>
     </div>
   );
 }
