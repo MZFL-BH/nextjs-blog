@@ -34,7 +34,7 @@ export default function Home() {
         <ThemeToggle />
 
         {/* 主内容区域 */}
-        <main className="flex-1 lg:ml-80">
+        <main className="flex-1 lg:ml-64">
 
 
           <div className="max-w-7xl mx-auto px-6 py-12 lg:px-8">

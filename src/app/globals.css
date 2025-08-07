@@ -54,9 +54,9 @@
   --bgColor-emphasis: #1f6feb;
 
   /* 前景色 */
-  --fgColor-default: #e6edf3;
-  --fgColor-muted: #7d8590;
-  --fgColor-subtle: #6e7681;
+  --fgColor-default: #f0f6fc;
+  --fgColor-muted: #8b949e;
+  --fgColor-subtle: #7d8590;
   --fgColor-onEmphasis: #ffffff;
 
   /* 边框色 */

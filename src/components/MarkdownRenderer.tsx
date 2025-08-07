@@ -72,7 +72,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
       .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mb-6" style="color: var(--foreground);">$1</h1>')
       
       // 行内代码
-      .replace(/`([^`]+)`/gim, '<code class="px-2 py-1 rounded-lg text-sm font-mono font-medium" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2);">$1</code>')
+      .replace(/`([^`]+)`/gim, '<code class="px-2 py-1 rounded-lg text-sm font-mono font-medium" style="background: var(--bgColor-accent-muted); color: var(--fgColor-accent); border: 1px solid var(--borderColor-emphasis);">$1</code>')
       
       // 粗体和斜体
       .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-semibold">$1</strong>')
@@ -83,7 +83,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
       .replace(/^- (.*$)/gim, '<li class="mb-2 ml-6 list-disc">$1</li>')
       
       // 链接
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline transition-colors">$1</a>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" class="underline transition-colors" style="color: var(--fgColor-accent);">$1</a>')
       
       // 段落
       .replace(/\n\n/gim, '</p><p class="mb-4 leading-relaxed" style="color: var(--foreground);">')

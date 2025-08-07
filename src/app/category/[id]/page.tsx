@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import ArticleCard from '@/components/ArticleCard';
+import ThemeToggle from '@/components/ThemeToggle';
 import { getCategoryById, getAllCategories } from '@/data/categories';
 import { getArticlesByCategory } from '@/data/articles';
 import { useLocale } from '@/hooks/useLocale';
@@ -44,19 +45,22 @@ export default function CategoryPage() {
   const categoryName = locale === 'en' ? category.nameEn : category.name;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
       {/* 头部导航 */}
       <Header onMenuClick={() => setSidebarOpen(true)} />
       
       <div className="flex">
         {/* 侧边栏 */}
-        <Sidebar 
-          isOpen={sidebarOpen} 
-          onClose={() => setSidebarOpen(false)} 
+        <Sidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
         />
-        
+
+        {/* 主题切换按钮 */}
+        <ThemeToggle />
+
         {/* 主内容区域 */}
-        <main className="flex-1 lg:ml-80">
+        <main className="flex-1 lg:ml-64">
           <div className="max-w-7xl mx-auto px-4 py-8 lg:px-8">
             {/* 面包屑导航 */}
             <nav className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-6">

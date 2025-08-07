@@ -21,7 +21,7 @@ export default function ArticleCard({ article, featured = false }: ArticleCardPr
     <Link href={`/article/${article.id}`}>
       <article
         className={cn(
-          "group rounded-lg transition-all duration-200 overflow-hidden border",
+          "group rounded-lg transition-all duration-200 overflow-hidden border h-80 flex flex-col",
           featured && "ring-1 ring-blue-200 dark:ring-blue-800"
         )}
         style={{
@@ -39,7 +39,7 @@ export default function ArticleCard({ article, featured = false }: ArticleCardPr
         }}
       >
         {/* GitHub 风格文章头部 */}
-        <div className="p-6">
+        <div className="p-6 flex flex-col flex-1">
           {/* 标题和评分 */}
           <div className="flex items-start justify-between mb-3">
             <h3
@@ -63,7 +63,10 @@ export default function ArticleCard({ article, featured = false }: ArticleCardPr
           </div>
 
           {/* 描述 */}
-          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3">
+          <p
+            className="text-sm leading-relaxed mb-4 line-clamp-3 flex-1"
+            style={{ color: 'var(--fgColor-muted)' }}
+          >
             {description}
           </p>
 
@@ -72,20 +75,33 @@ export default function ArticleCard({ article, featured = false }: ArticleCardPr
             {article.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                style={{
+                  backgroundColor: 'var(--bgColor-accent-muted)',
+                  color: 'var(--fgColor-accent)'
+                }}
               >
                 {tag}
               </span>
             ))}
             {article.tags.length > 3 && (
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+              <span
+                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                style={{
+                  backgroundColor: 'var(--bgColor-accent-muted)',
+                  color: 'var(--fgColor-accent)'
+                }}
+              >
                 +{article.tags.length - 3}
               </span>
             )}
           </div>
 
           {/* 元信息 */}
-          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+          <div
+            className="flex items-center justify-between text-sm"
+            style={{ color: 'var(--fgColor-muted)' }}
+          >
             <div className="flex items-center space-x-4">
               {/* 难度 */}
               <span className={cn(

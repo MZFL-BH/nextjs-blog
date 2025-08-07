@@ -46,7 +46,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* 侧边栏 */}
       <div
         className={cn(
-          "fixed top-0 left-0 h-screen w-80 z-50 transform transition-all duration-300 ease-in-out lg:fixed lg:translate-x-0 lg:z-auto flex flex-col",
+          "fixed top-0 left-0 h-screen w-64 z-50 transform transition-all duration-300 ease-in-out lg:fixed lg:translate-x-0 lg:z-auto flex flex-col",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
         style={{
