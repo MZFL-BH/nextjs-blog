@@ -8,8 +8,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Frontend Learning Platform - 前端学习平台",
-  description: "A comprehensive platform for learning frontend development technologies from basics to advanced topics. 系统学习前端开发技术，从基础到进阶。",
-  keywords: "frontend, web development, JavaScript, React, Vue, CSS, HTML, TypeScript, 前端开发, 网页开发",
+  description:
+    "A comprehensive platform for learning frontend development technologies from basics to advanced topics. 系统学习前端开发技术，从基础到进阶。",
+  keywords:
+    "frontend, web development, JavaScript, React, Vue, CSS, HTML, TypeScript, 前端开发, 网页开发",
   authors: [{ name: "dev-zuo" }],
   creator: "dev-zuo",
   publisher: "Frontend Learning Platform",
@@ -18,27 +20,29 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://frontend-learning.dev'),
+  metadataBase: new URL("https://frontend-learning.dev"),
   alternates: {
-    canonical: '/',
+    canonical: "/",
     languages: {
-      'zh-CN': '/zh',
-      'en-US': '/en',
+      "zh-CN": "/zh",
+      "en-US": "/en",
     },
   },
   openGraph: {
-    type: 'website',
-    locale: 'zh_CN',
-    url: 'https://frontend-learning.dev',
-    title: 'Frontend Learning Platform - 前端学习平台',
-    description: 'A comprehensive platform for learning frontend development technologies from basics to advanced topics.',
-    siteName: 'Frontend Learning Platform',
+    type: "website",
+    locale: "zh_CN",
+    url: "https://frontend-learning.dev",
+    title: "Frontend Learning Platform - 前端学习平台",
+    description:
+      "A comprehensive platform for learning frontend development technologies from basics to advanced topics.",
+    siteName: "Frontend Learning Platform",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Frontend Learning Platform - 前端学习平台',
-    description: 'A comprehensive platform for learning frontend development technologies from basics to advanced topics.',
-    creator: '@dev-zuo',
+    card: "summary_large_image",
+    title: "Frontend Learning Platform - 前端学习平台",
+    description:
+      "A comprehensive platform for learning frontend development technologies from basics to advanced topics.",
+    creator: "@dev-zuo",
   },
   robots: {
     index: true,
@@ -46,13 +50,13 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: "your-google-verification-code",
   },
 };
 
@@ -68,16 +72,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                const theme = localStorage.getItem('theme') ||
-                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                document.documentElement.classList.add(theme);
-                if (theme === 'dark') {
-                  document.documentElement.style.setProperty('--background', '#0a0a0a');
-                  document.documentElement.style.setProperty('--foreground', '#ededed');
-                } else {
-                  document.documentElement.style.setProperty('--background', '#ffffff');
-                  document.documentElement.style.setProperty('--foreground', '#171717');
-                }
+                const saved = localStorage.getItem('theme');
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = (saved === 'light' || saved === 'dark') ? saved : (systemDark ? 'dark' : 'light');
+                const root = document.documentElement;
+                root.classList.remove('light','dark');
+                root.classList.add(theme);
               } catch (e) {}
             `,
           }}
@@ -85,9 +85,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider>
-          <LocaleProvider>
-            {children}
-          </LocaleProvider>
+          <LocaleProvider>{children}</LocaleProvider>
         </ThemeProvider>
       </body>
     </html>
