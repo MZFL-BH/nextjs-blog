@@ -25,7 +25,33 @@ function copyRecursiveSync(src, dest) {
       );
     });
   } else {
-    fs.copyFileSync(src, dest);
+    // 对于 HTML 文件，我们需要替换其中的链接路径
+    if (path.extname(src) === ".html") {
+      let content = fs.readFileSync(src, "utf8");
+      // 替换静态资源路径，添加 basePath 前缀
+      content = content.replace(/\/_next\//g, "/nextjs-blog/_next/");
+      content = content.replace(/\/favicon\.ico/g, "/nextjs-blog/favicon.ico");
+      // 替换导航链接，添加 basePath 前缀
+      content = content.replace(/href="\//g, 'href="/nextjs-blog/');
+      // 特殊处理文章链接
+      content = content.replace(
+        /href="\/article\//g,
+        'href="/nextjs-blog/article/',
+      );
+      // 特殊处理分类链接
+      content = content.replace(
+        /href="\/category\//g,
+        'href="/nextjs-blog/category/',
+      );
+      // 修复可能被错误替换的双前缀
+      content = content.replace(
+        /href="\/nextjs-blog\/nextjs-blog\//g,
+        'href="/nextjs-blog/',
+      );
+      fs.writeFileSync(dest, content, "utf8");
+    } else {
+      fs.copyFileSync(src, dest);
+    }
   }
 }
 
