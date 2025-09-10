@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useLocale } from "@/hooks/useLocale";
 import { searchArticles } from "@/data/articles";
 import { searchCategories } from "@/data/categories";
-import { cn, debounce } from "@/lib/utils";
+import { debounce } from "@/lib/utils";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 const SettingsDropdown = dynamic(() => import("./SettingsDropdown"), {

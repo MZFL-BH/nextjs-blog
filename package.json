@@ -9,8 +9,7 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "prepare": "husky",
-    "export": "next export",
-    "deploy": "next build && next export && gh-pages -d out"
+    "deploy": "next build"
   },
   "dependencies": {
     "next": "15.4.5",

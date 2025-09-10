@@ -4,11 +4,11 @@ import { notFound } from "next/navigation";
 import CategoryClient from "./Client";
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default function CategoryPage({ params }: PageProps) {
-  const id = params.id;
+export default async function CategoryPage({ params }: PageProps) {
+  const { id } = await params;
   const category = getCategoryById(id);
   if (!category) {
     notFound();
@@ -55,8 +55,13 @@ export async function generateStaticParams() {
   return all.map((c) => ({ id: c.id }));
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const category = getCategoryById(params.id);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const category = getCategoryById(id);
   if (!category) return {};
   return {
     title: `${category.name} | Frontend Learning`,
