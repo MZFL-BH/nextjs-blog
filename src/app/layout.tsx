@@ -65,6 +65,8 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code",
   },
+  // 声明站点图标路径（相对路径，生产环境会自动加上 basePath）
+  icons: { icon: "/favicon.ico" },
 };
 
 export default function RootLayout({
@@ -75,6 +77,14 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <head>
+        {/* 显式声明 favicon，生产环境加上 basePath 前缀 */}
+        <link
+          rel="icon"
+          href={
+            (process.env.NODE_ENV === "production" ? "/nextjs-blog" : "") +
+            "/favicon.ico"
+          }
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
