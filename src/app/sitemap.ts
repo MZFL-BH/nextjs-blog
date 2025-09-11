@@ -5,7 +5,11 @@ import { getAllCategories } from "@/data/categories";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://frontend-learning.dev";
+  // 根据环境动态设置baseUrl
+  const baseUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://mzfl-bh.github.io/nextjs-blog"
+      : "http://localhost:3000";
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {

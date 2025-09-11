@@ -3,7 +3,12 @@ import { MetadataRoute } from "next";
 export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://frontend-learning.dev";
+  // 根据环境动态设置baseUrl
+  const baseUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://mzfl-bh.github.io/nextjs-blog"
+      : "http://localhost:3000";
+
   return {
     rules: {
       userAgent: "*",

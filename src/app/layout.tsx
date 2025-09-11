@@ -20,7 +20,11 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://frontend-learning.dev"),
+  metadataBase: new URL(
+    process.env.NODE_ENV === "production"
+      ? "https://mzfl-bh.github.io/nextjs-blog"
+      : "http://localhost:3000",
+  ),
   alternates: {
     canonical: "/",
     languages: {
@@ -31,7 +35,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "zh_CN",
-    url: "https://frontend-learning.dev",
+    url:
+      process.env.NODE_ENV === "production"
+        ? "https://mzfl-bh.github.io/nextjs-blog"
+        : "http://localhost:3000",
     title: "Frontend Learning Platform - 前端学习平台",
     description:
       "A comprehensive platform for learning frontend development technologies from basics to advanced topics.",
