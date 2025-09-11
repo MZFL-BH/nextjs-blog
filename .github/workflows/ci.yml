@@ -39,5 +39,6 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: 1
           CI: true
+          NODE_ENV: production
         run: pnpm build
 
