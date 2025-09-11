@@ -4,7 +4,10 @@ import { articles } from "@/data/articles";
 export const revalidate = 3600;
 
 export async function GET() {
-  const site = "https://frontend-learning.dev";
+  const site =
+    process.env.NODE_ENV === "production"
+      ? "https://mzfl-bh.github.io/nextjs-blog"
+      : "http://localhost:3000";
 
   const items = articles
     .map(
